@@ -1,0 +1,13 @@
+.DS_Store
+.vscode
+
+*.js.map
+*.metadata.json
+app/**/*.js
+app/**/*.css
+
+hooks/*/nativescript-*.js
+node_modules/
+platforms/
+tmp/
+typings/

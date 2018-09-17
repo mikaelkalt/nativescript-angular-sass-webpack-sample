@@ -1,25 +1,32 @@
-# NativeScript Angular Template
+# NativeScript Angular Sample Project 
 
-This template creates a "Hello, world" NativeScript app using TypeScript and Angular.
+This demo can be used to demonstrate the problem when using webpack in combination with SASS. 
 
-You can create a new app that uses this template with either the `--template` option.
+## Setup
 
-```
-tns create my-app-name --template tns-template-hello-world-ng
-```
-
-Or the `--ng` shorthand.
+This project was generated using the angular template seed: 
 
 ```
 tns create my-app-name --ng
 ```
 
-> Note: Both commands will create a new NativeScript app that uses the latest version of this template published to [npm] (https://www.npmjs.com/package/tns-template-hello-world-ng).
+After that webpack was installed to be used for building the app. Therefore I've followed the documentation: 
+https://docs.nativescript.org/performance-optimizations/bundling-with-webpack
 
-If you want to create a new app that uses the source of the template from the `master` branch, you can execute the following:
+In addition, I've installed the SASS Plugin for NativeScript. Therefore I've follwowed this documentation: 
+https://docs.nativescript.org/ui/theme#sass-usage
+
+## Reproduce the problem
+ 
+The problem we were facing when using webpack and SASS in combination in a NativeScript project, is that the scss files are not compiled when building the app with e.g. `tns build ios --bundle` the hook is skipped because of the `--bundle` flag. Since the compilation is skipped webpack does not find the compiled css files. According to the SASS Usage documentation of NativeScript components should reference the css file and not the scss file - which works fine, when not using webpack. 
+
+The error that will appear: 
 
 ```
-tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng.git#master
-```
-
-**NB:** Please, have in mind that the master branch may refer to dependencies that are not on NPM yet!
+ERROR in ./item/item-detail.component.ts
+Module not found: Error: Can't resolve './item-detail.css' in 'app/item'
+ @ ./item/item-detail.component.ts 17:21-49
+ @ ./app.module.ts
+ @ ./main.ts
+ ```
+ 
